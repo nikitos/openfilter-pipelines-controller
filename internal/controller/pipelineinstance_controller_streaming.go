@@ -538,6 +538,7 @@ func (r *PipelineInstanceReconciler) ensureFilterServices(ctx context.Context, p
 	}
 
 	// Group services by filter name to assign indices
+	// 
 	servicesByFilter := make(map[string][]pipelinesv1alpha1.ServicePort)
 	for _, svc := range pipeline.Spec.Services {
 		servicesByFilter[svc.Name] = append(servicesByFilter[svc.Name], svc)
@@ -560,6 +561,8 @@ func (r *PipelineInstanceReconciler) ensureFilterServices(ctx context.Context, p
 			if svcPort.Protocol != "" {
 				protocol = svcPort.Protocol
 			}
+
+
 
 			desiredService := &corev1.Service{
 				ObjectMeta: metav1.ObjectMeta{
@@ -584,8 +587,17 @@ func (r *PipelineInstanceReconciler) ensureFilterServices(ctx context.Context, p
 							Protocol:   protocol,
 						},
 					},
-					Type: corev1.ServiceTypeClusterIP,
+					Type: svcPort.Type,
 				},
+			}
+
+			if svcPort.Filter {
+				desiredService.Spec.Ports = append(desiredService.Spec.Ports, corev1.ServicePort{
+					Name:       filterName + "1",
+					Port:       svcPort.Port + 1,
+					TargetPort: intstr.FromInt32(targetPort+1),
+					Protocol:   protocol,
+				})	
 			}
 
 			if apierrors.IsNotFound(err) {
