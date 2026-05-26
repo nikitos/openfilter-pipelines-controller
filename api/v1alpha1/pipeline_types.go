@@ -163,13 +163,14 @@ type ServicePort struct {
 	// +optional
 	// +kubebuilder:default=false
 	// +kubebuilder:validation:Bool=true;false
-	Filter bool `json:"isFilter,omitempty"`
+	IsFilter bool `json:"isFilter,omitempty"`
 	
 	// service type
 	// +optional
 	// +kubebuilder:default=TCP
 	// +kubebuilder:validation:Enum=corev1.ServiceTypeClusterIP;corev1.ServiceTypeLoadBalancer
 	Type corev1.ServiceType `json:"type,omitempty"`
+
 }
 
 // Filter defines a containerized processing step in the pipeline
