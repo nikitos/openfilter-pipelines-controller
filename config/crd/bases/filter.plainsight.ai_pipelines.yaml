@@ -419,7 +419,7 @@ spec:
                   properties:
                     isFilter:
                       default: false
-                      description: if isFilter expose port +1
+                      description: if filter expose port +1
                       type: boolean
                     name:
                       description: |-
