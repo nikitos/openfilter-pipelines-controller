@@ -450,7 +450,7 @@ spec:
                       minimum: 1
                       type: integer
                     type:
-                      default: TCP
+                      default: corev1.ServiceTypeClusterIP
                       description: service type
                       enum:
                       - corev1.ServiceTypeClusterIP
