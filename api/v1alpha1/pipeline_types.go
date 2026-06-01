@@ -165,10 +165,10 @@ type ServicePort struct {
 	// +kubebuilder:validation:Bool=true;false
 	IsFilter bool `json:"isFilter,omitempty"`
 
-	// service type
+	// type defines the Kubernetes Service type to create for this port. Defaults to ClusterIP. Use LoadBalancer to expose the Service outside the cluster (note: cluster operators may restrict external types via ResourceQuota).
 	// +optional
 	// +kubebuilder:default=ClusterIP
-	// +kubebuilder:validation:Enum=ClusterIP;LoadBalancer
+	// +kubebuilder:validation:Enum=ClusterIP;LoadBalancer;NodePort
 	Type corev1.ServiceType `json:"type,omitempty"`
 }
 
